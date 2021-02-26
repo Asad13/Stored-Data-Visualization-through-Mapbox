@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <title>NYPD Police Database</title>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css' rel='stylesheet' />
+    <!-- Added By Asad Mujumder -->
+    <!-- Google font for Search button -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <div id='map'></div>
+    <div class='map-overlay' id='features'>
+        <!-- Added by Asad Mujumder -->
+        <div id="sideSearchButton">
+            <i class="material-icons" style="font-size: 36px;color:#4E4E4B;text-align: center;">&#xe8b6;</i>
+        </div>
+        <div id="sideNavButton">
+            <svg height="44" width="44">
+                <circle cx="22" cy="22" r="20" stroke="black" stroke-width="4" fill="transparent" />
+                <line x1="22" y1="12" x2="22" y2="32" style="stroke:#4E4E4B;stroke-width:4" />
+                <line x1="12" y1="22" x2="32" y2="22" style="stroke:#4E4E4B;stroke-width:4" />
+                Sorry, your browser does not support inline SVG.
+            </svg>
+        </div>
+        <h2>NYPD Precinct Database</h2>
+        <div id='pd'>
+            <p>Hover over a precinct</p>
+        </div>
+    </div>
+    <div class='map-overlay' id='legend'></div>
+
+    <!-- Search Side Bar -->
+    <!-- Added by Asad Mujumder -->
+    <div id="searchSideNav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" id="closeSearchButton">&times;</a>
+        <h3>HOW TO SEARCH INFORMATION</h3>
+        <hr>
+        <ol id="searchInstructions" style="margin-left: 45px;margin-bottom: 20px;">
+            <li>Search by identifiers (ie. #femme, #black, #dominican).</li>
+            <li>Search by incident date or location.</li>
+            <li>You have to select at least one search criteria.</li>
+        </ol>
+        <div class="container-fluid">
+            <form name="searchForm" id="searchForm">
+                <div class="row">
+                    <div class="col-md-3 formElement">
+                        <label for="identifiersSearch"><b>Identifiers:</b></label>
+                    </div>
+                    <div class="col-md-9 formElement">
+                        <input type="text" placeholder="ie. #femme, #black, #dominican" name="identifiersSearch" id="identifiersSearch">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 formElement">
+                        <label for="incidentDateSearch"><b>Date:</b></label>
+                    </div>
+                    <div class="col-md-9 formElement">
+                        <input type="date" id="incidentDateSearch" name="incidentDateSearch" pattern="\d{4}-\d{2}-\d{2}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 formElement">
+                        <label for=""><b>Location:</b></label>
+                    </div>
+                    <div class="col-md-9 formElement">
+                        <select name="boroughSearch" id="boroughSearch" style="width:100%">
+                            <option value="" selected disabled>Patrol Borough</option>
+                            <option value="0">Manhatton South</option>
+                            <option value="1">Manhatton North</option>
+                            <option value="2">Bronx</option>
+                            <option value="3">Brooklyn South</option>
+                            <option value="4">Brooklyn North</option>
+                            <option value="5">Queens South</option>
+                            <option value="6">Queens North</option>
+                            <option value="7">Staten Island</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="" style="visibility: hidden;" id="offsetaddressSearch"><b>Location:</b></label>
+                    </div>
+                    <div class="col-md-9 formElement">
+                        <select name="addressSearch" id="addressSearch" style="width: 100%;" disabled>
+                            <option value="" selected disabled>Address</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 15px;padding-bottom: 30px;">
+                    <button type="button" id="searchbutton">SEARCH</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Added by Asad Mujumder -->
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" id="closeNavButton">&times;</a>
+        <h3>HOW TO PROVIDE INFORMATION</h3>
+        <hr>
+        <ol id="listInstructions" style="margin-left: 45px;margin-bottom: 20px;">
+            <li>Click on the location of the incident.</li>
+            <li> Fill out the form below.</li>
+            <li>Add 2 or more identities that you associate with as hashtags separated by commas.</li>
+            <li> Click the 'ADD' button.</li>
+        </ol>
+        <div class="container-fluid">
+            <form name="myForm" id="myForm">
+                <div class="row">
+                    <!-- Date -->
+                    <div class="col-md-6 formElement">
+                        <div class="row">
+                            <div class="col-md-3 formElement">
+                                <label for="incidentDate"><b>Date:</b></label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="date" id="incidentDate" name="incidentDate" pattern="\d{4}-\d{2}-\d{2}"
+                                    class="required">
+                            </div>
+                            <div class="errorMsg" id="incidentDateError">
+                                <p>You must specify the date of the incident</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Time -->
+                    <div class="col-md-6 formElement">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for=""><b>Time:</b></label>
+                            </div>
+                            <div class="col-md-9">
+                                <select id="hour" name="hour">
+                                    <option value="1">01</option>
+                                    <option value="2">02</option>
+                                    <option value="3">03</option>
+                                    <option value="4">04</option>
+                                    <option value="5">05</option>
+                                    <option value="6">06</option>
+                                    <option value="7">07</option>
+                                    <option value="8">08</option>
+                                    <option value="9">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                                <select id="minute" name="minute">
+                                    <option value="0">00</option>
+                                    <option value="1">01</option>
+                                    <option value="2">02</option>
+                                    <option value="3">03</option>
+                                    <option value="4">04</option>
+                                    <option value="5">05</option>
+                                    <option value="6">06</option>
+                                    <option value="7">07</option>
+                                    <option value="8">08</option>
+                                    <option value="9">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                    <option value="24">24</option>
+                                    <option value="25">25</option>
+                                    <option value="26">26</option>
+                                    <option value="27">27</option>
+                                    <option value="28">28</option>
+                                    <option value="29">29</option>
+                                    <option value="30">30</option>
+                                    <option value="31">31</option>
+                                    <option value="32">32</option>
+                                    <option value="33">33</option>
+                                    <option value="34">34</option>
+                                    <option value="35">35</option>
+                                    <option value="36">36</option>
+                                    <option value="37">37</option>
+                                    <option value="38">38</option>
+                                    <option value="39">39</option>
+                                    <option value="40">40</option>
+                                    <option value="41">41</option>
+                                    <option value="42">42</option>
+                                    <option value="43">43</option>
+                                    <option value="44">44</option>
+                                    <option value="45">45</option>
+                                    <option value="46">46</option>
+                                    <option value="47">47</option>
+                                    <option value="48">48</option>
+                                    <option value="49">49</option>
+                                    <option value="50">50</option>
+                                    <option value="51">51</option>
+                                    <option value="52">52</option>
+                                    <option value="53">53</option>
+                                    <option value="54">54</option>
+                                    <option value="55">55</option>
+                                    <option value="56">56</option>
+                                    <option value="57">57</option>
+                                    <option value="58">58</option>
+                                    <option value="59">59</option>
+                                </select>
+                                <select id="meridiem" name="meridiem">
+                                    <option value="0">AM</option>
+                                    <option value="1">PM</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="errorMsg" id="incidentTimeError">
+                            <p>You must specify the time of the incident</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-md-2 formElement">
+                                <label for=""><b>Location:</b></label>
+                            </div>
+                            <div class="col-md-4 formElement">
+                                <select name="borough" id="borough" class="required">
+                                    <option value="" selected disabled>Patrol Borough</option>
+                                    <option value="0">Manhatton South</option>
+                                    <option value="1">Manhatton North</option>
+                                    <option value="2">Bronx</option>
+                                    <option value="3">Brooklyn South</option>
+                                    <option value="4">Brooklyn North</option>
+                                    <option value="5">Queens South</option>
+                                    <option value="6">Queens North</option>
+                                    <option value="7">Staten Island</option>
+                                </select>
+                                <div class="errorMsg" id="boroughError">
+                                    <p>You must specify the borough of the incident</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 formElement">
+                                <select name="address" id="address" style="width: 100%;" disabled class="required">
+                                    <option value="" selected disabled>Address</option>
+                                </select>
+                                <div class="errorMsg" id="addressError">
+                                    <p>You must specify the location of the incident</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 formElement">
+                        <div class="row">
+                            <div class="col-8">
+                                <label for=""><b>Resident of precinct?</b></label>
+                            </div>
+                            <div class="col-4">
+                                <label for="residentYes" style="padding-right: 20px;">
+                                    <input type="radio" id="residentYes" name="resident" value="1">
+                                    Yes
+                                </label>
+                                <label for="residentNo">
+                                    <input type="radio" id="residentNo" name="resident" value="0">
+                                    No
+                                </label>
+                            </div>
+                            <div class="errorMsg" id="residentError">
+                                <p>You must select an option</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 formElement">
+                        <div class="row">
+                            <div class="col-8">
+                                <label for=""><b>Police notified?</b></label>
+                            </div>
+                            <div class="col-4">
+                                <label for="notifiedYes" style="padding-right: 20px;">
+                                    <input type="radio" id="notifiedYes" name="notified" value="1">
+                                    Yes
+                                </label>
+                                <label for="notifiedNo">
+                                    <input type="radio" id="notifiedNo" name="notified" value="0">
+                                    No
+                                </label>
+                            </div>
+                            <div class="errorMsg" id="notifiedError">
+                                <p>You must select an option</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 formElement">
+                        <div class="row">
+                            <div class="col-8">
+                                <label for=""><b>Cross streets?</b></label>
+                            </div>
+                            <div class="col-4">
+                                <label for="crossStreetYes" style="padding-right: 20px;">
+                                    <input type="radio" id="crossStreetYes" name="crossStreet" value="1">
+                                    Yes
+                                </label>
+                                <label for="crossStreetNo">
+                                    <input type="radio" id="crossStreetNo" name="crossStreet" value="0">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="identifiers"><b>Identifiers:</b></label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text"
+                            placeholder="Add 2 or more identities that you associate with (#lgbtq, #dominican, #black, #trans)"
+                            name="identifiers" id="identifiers" class="required">
+                    </div>
+                    <div class="errorMsg" id="identifiersError">
+                        <p>You must give 2 or more identities starting with a hashtag separated by commas</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for=""><b>Incident Description:</b></label>
+                    </div>
+                    <div class="col-12 formElement">
+                        <textarea placeholder="Details on NYPD interaction here..." name="incidentdesc"
+                            id="incidentdesc" style="height: 150px;" class="required"></textarea>
+                        <div class="errorMsg" id="incidentdescError">
+                            <p>You must tell something about the incident</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for=""><b>Were there witnesses to the incident?</b></label>
+                    </div>
+                    <div class="col-md-3 formElement">
+                        <label for="witnessYes" style="padding-right: 20px;">
+                            <input type="radio" id="witnessYes" name="witness" value="1">
+                            Yes
+                        </label>
+                        <label for="notifiedNo">
+                            <input type="radio" id="witnessNo" name="witness" value="0">
+                            No
+                        </label>
+                    </div>
+                    <div class="errorMsg" id="witnessError">
+                        <p>You must select an option</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for=""><b>Was any individual injured?</b></label>
+                    </div>
+                    <div class="col-md-3 formElement">
+                        <label for="injuredYes" style="padding-right: 20px;">
+                            <input type="radio" id="injuredYes" name="injured" value="1">
+                            Yes
+                        </label>
+                        <label for="injuredNo">
+                            <input type="radio" id="injuredNo" name="injured" value="0">
+                            No
+                        </label>
+                    </div>
+                    <div class="errorMsg" id="injuredError">
+                        <p>You must select an option</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 formElement">
+                        <textarea
+                            placeholder="If yes describe the injury or the body part injured and other important information"
+                            name="injureddesc" id="injureddesc" style="height: 80px;" disabled></textarea>
+                        <div class="errorMsg" id="injureddescError">
+                            <p>You must tell something about the injuries</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for=""><b>Was medical treatment provided?</b></label>
+                    </div>
+                    <div class="col-md-6 formElement">
+                        <label for="treatmentYes" style="padding-right: 20px;">
+                            <input type="radio" id="treatmentYes" name="treatment" value="1">
+                            Yes
+                        </label>
+                        <label for="treatmentNo">
+                            <input type="radio" id="treatmentNo" name="treatment" value="0">
+                            No
+                        </label>
+                        <label for="treatmentRefused">
+                            <input type="radio" id="treatmentRefused" name="treatment" value="2">
+                            Refused treatment
+                        </label>
+                    </div>
+                    <div class="errorMsg" id="treatmentError">
+                        <p>You must select an option</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for=""><b>Where was the treatment provided?</b></label>
+                    </div>
+                    <div class="col-md-6 formElement">
+                        <label for="treatmentPlaceOn" style="padding-right: 20px;">
+                            <input type="radio" id="treatmentPlaceOn" name="treatmentPlace" value="1" disabled>
+                            On site
+                        </label>
+                        <label for="treatmentPlaceRoom">
+                            <input type="radio" id="treatmentPlaceRoom" name="treatmentPlace" value="0" disabled>
+                            Emergency Room
+                        </label>
+                        <label for="treatmentPlaceOther">
+                            <input type="radio" id="treatmentPlaceOther" name="treatmentPlace" value="2" disabled>
+                            Other
+                        </label>
+                    </div>
+                    <div class="errorMsg" id="treatmenPlacetError">
+                        <p>You must select an option</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="officersName"><b>Officer(s) name:</b>
+                            <input type="text" placeholder="Separated by commas" name="officersName" id="officersName">
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="officersBadge"><b>Badge numbers:</b>
+                            <input type="text" placeholder="Separated by commas" name="officersBadge"
+                                id="officersBadge">
+                        </label>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="officersCar"><b>Car numbers:</b>
+                            <input type="text" placeholder="Separated by commas" name="officersCar" id="officersCar">
+                        </label>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 15px;padding-bottom: 30px;">
+                    <button type="submit" id="addbutton">ADD</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="/js/map.js"></script>
+</body>
+</html>

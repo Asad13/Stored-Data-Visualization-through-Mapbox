@@ -1,0 +1,680 @@
+/* Added By Asad Mujumder */
+        /* ***************************************** */
+        /* Starting of Responsive Grid System Style */
+
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Full width container */
+        .container-fluid {
+            width: 100%;
+        }
+
+        /* Fixed width container[For extra small devices(mobile)] */
+        .container {
+            padding-left: 15px;
+            padding-right: 15px;
+            margin: auto;
+        }
+
+        /* For responsive fixed width container */
+        [class*="container-"] {
+            padding-left: 15px;
+            padding-right: 15px;
+            margin: auto;
+        }
+
+        /* Fixing Floating */
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        /* -------- Extra Small Devices -------- */
+        [class*="col-"] {
+            /* For phones */
+            width: 100%;
+            float: left;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        /* -------- Extra Small Devices -------- */
+        @media only screen and (max-device-width: 576px) {
+            /* For phones */
+
+            /* Fixed width container[For extra small devices(mobile)] */
+            .container {
+                width: 100%;
+            }
+
+            .col-1 {
+                width: 8.33%;
+            }
+
+            .col-2 {
+                width: 16.66%;
+            }
+
+            .col-3 {
+                width: 25%;
+            }
+
+            .col-4 {
+                width: 33.33%;
+            }
+
+            .col-5 {
+                width: 41.66%;
+            }
+
+            .col-6 {
+                width: 50%;
+            }
+
+            .col-7 {
+                width: 58.33%;
+            }
+
+            .col-8 {
+                width: 66.66%;
+            }
+
+            .col-9 {
+                width: 75%;
+            }
+
+            .col-10 {
+                width: 83.33%;
+            }
+
+            .col-11 {
+                width: 91.66%;
+            }
+
+            .col-12 {
+                width: 100%;
+            }
+        }
+
+        /* -------- Small Devices -------- */
+        @media only screen and (min-device-width: 576px) {
+            /* For portrait tablets and large phones */
+
+            /* Responsive fixed width container fo small devices */
+            .container,
+            .container-sm {
+                max-width: 540px;
+            }
+
+            .col-sm-1 {
+                width: 8.33%;
+            }
+
+            .col-sm-2 {
+                width: 16.66%;
+            }
+
+            .col-sm-3 {
+                width: 25%;
+            }
+
+            .col-sm-4 {
+                width: 33.33%;
+            }
+
+            .col-sm-5 {
+                width: 41.66%;
+            }
+
+            .col-sm-6 {
+                width: 50%;
+            }
+
+            .col-sm-7 {
+                width: 58.33%;
+            }
+
+            .col-sm-8 {
+                width: 66.66%;
+            }
+
+            .col-sm-9 {
+                width: 75%;
+            }
+
+            .col-sm-10 {
+                width: 83.33%;
+            }
+
+            .col-sm-11 {
+                width: 91.66%;
+            }
+
+            .col-sm-12 {
+                width: 100%;
+            }
+        }
+
+        /* -------- Medium Devices -------- */
+        @media only screen and (min-device-width: 768px) {
+            /* For landscape tablets */
+
+            /* Responsive fixed width container fo medium devices */
+            .container,
+            .container-sm,
+            .container-md {
+                max-width: 720px;
+            }
+
+            .col-md-1 {
+                width: 8.33%;
+            }
+
+            .col-md-2 {
+                width: 16.66%;
+            }
+
+            .col-md-3 {
+                width: 25%;
+            }
+
+            .col-md-4 {
+                width: 33.33%;
+            }
+
+            .col-md-5 {
+                width: 41.66%;
+            }
+
+            .col-md-6 {
+                width: 50%;
+            }
+
+            .col-md-7 {
+                width: 58.33%;
+            }
+
+            .col-md-8 {
+                width: 66.66%;
+            }
+
+            .col-md-9 {
+                width: 75%;
+            }
+
+            .col-md-10 {
+                width: 83.33%;
+            }
+
+            .col-md-11 {
+                width: 91.66%;
+            }
+
+            .col-md-12 {
+                width: 100%;
+            }
+        }
+
+        /* -------- Large Devices -------- */
+        @media only screen and (min-device-width: 992px) {
+            /* For laptops/desktops: */
+
+            /* Responsive fixed width container fo large devices */
+            .container,
+            .container-sm,
+            .container-md,
+            .container-lg {
+                max-width: 960px;
+            }
+
+            .col-lg-1 {
+                width: 8.33%;
+            }
+
+            .col-lg-2 {
+                width: 16.66%;
+            }
+
+            .col-lg-3 {
+                width: 25%;
+            }
+
+            .col-lg-4 {
+                width: 33.33%;
+            }
+
+            .col-lg-5 {
+                width: 41.66%;
+            }
+
+            .col-lg-6 {
+                width: 50%;
+            }
+
+            .col-lg-7 {
+                width: 58.33%;
+            }
+
+            .col-lg-8 {
+                width: 66.66%;
+            }
+
+            .col-lg-9 {
+                width: 75%;
+            }
+
+            .col-lg-10 {
+                width: 83.33%;
+            }
+
+            .col-lg-11 {
+                width: 91.66%;
+            }
+
+            .col-lg-12 {
+                width: 100%;
+            }
+        }
+
+        /* -------- Extra Large Devices -------- */
+        @media only screen and (min-device-width: 1200px) {
+            /* For large laptops/desktops: */
+
+            /* Responsive fixed width container fo extra large devices */
+            .container,
+            .container-sm,
+            .container-md,
+            .container-lg,
+            .container-xl {
+                max-width: 1140px;
+            }
+
+            .col-xl-1 {
+                width: 8.33%;
+            }
+
+            .col-xl-2 {
+                width: 16.66%;
+            }
+
+            .col-xl-3 {
+                width: 25%;
+            }
+
+            .col-xl-4 {
+                width: 33.33%;
+            }
+
+            .col-xl-5 {
+                width: 41.66%;
+            }
+
+            .col-xl-6 {
+                width: 50%;
+            }
+
+            .col-xl-7 {
+                width: 58.33%;
+            }
+
+            .col-xl-8 {
+                width: 66.66%;
+            }
+
+            .col-xl-9 {
+                width: 75%;
+            }
+
+            .col-xl-10 {
+                width: 83.33%;
+            }
+
+            .col-xxl-11 {
+                width: 91.66%;
+            }
+
+            .col-l-12 {
+                width: 100%;
+            }
+        }
+
+        /* Finishing of Responsive Grid System Style */
+        /* ***************************************** */
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        h2,
+        h3 {
+            margin: 10px;
+            font-size: 1.2em;
+        }
+
+        h3 {
+            font-size: 1em;
+        }
+
+        p {
+            font-size: 0.85em;
+            margin: 10px;
+            text-align: left;
+        }
+
+        /**
+* Create a position for the map
+* on the page */
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /**
+* Set rules for how the map overlays
+* (information box and legend) will be displayed
+* on the page. */
+        .map-overlay {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.8);
+            margin-right: 20px;
+            font-family: Arial, sans-serif;
+            overflow: auto;
+            border-radius: 3px;
+            z-index: 29;
+        }
+
+        #features {
+            top: 0;
+            height: 460px;
+            margin-top: 20px;
+            width: 400px;
+        }
+
+        #sideSearchButton{
+            position: absolute;
+            top: 0;
+            right: 50px;
+            margin-top: 10px;
+            margin-right: 10px;
+            z-index: 5;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            border: 4px solid black;
+            border-radius: 50%;
+        }
+
+        #sideNavButton {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin-top: 10px;
+            margin-right: 10px;
+            z-index: 5;
+            cursor: pointer;
+        }
+
+        /* Addded by Asad Mujumder */
+        /* The side navigation menu */
+        .sidenav {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            height: 100%;
+            /* 100% Full-height */
+            width: 0;
+            /* 0 width - change this with JavaScript */
+            position: fixed;
+            /* Stay in place */
+            z-index: 30;
+            /* Stay on top */
+            top: 0;
+            /* Stay at the top */
+            right: 0;
+            background-color: rgb(255, 255, 255);
+            ;
+            /* Black*/
+            overflow-x: hidden;
+            /* Disable horizontal scroll */
+            padding-top: 60px;
+            /* Place content 60px from the top */
+            transition: 0.5s;
+            /* 0.5 second transition effect to slide in the sidenav */
+        }
+
+        /* Addded by Asad Mujumder */
+        /* The navigation menu links */
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-weight: bold;
+            color: black;
+            display: block;
+            transition: 0.3s;
+        }
+
+        /* Addded by Asad Mujumder */
+        /* When you mouse over the navigation links, change their color */
+        .sidenav a:hover {
+            color: #4E4E4B;
+        }
+
+        /* Addded by Asad Mujumder */
+        /* Position and style the close button (top right corner) */
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #listInstructions li {
+            font-size: 17px;
+            line-height: 1.2em;
+        }
+        #searchInstructions li {
+            font-size: 17px;
+            line-height: 1.2em;
+        }
+
+        /* Addded by Asad Mujumder */
+        textarea {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+            outline: none;
+            background-color: #f8f8f8;
+            font-size: 16px;
+            resize: none;
+        }
+
+        /* Addded by Asad Mujumder */
+        textarea:focus {
+            border: 1px solid #555;
+        }
+
+        /* Addded by Asad Mujumder */
+        #addbutton,#searchbutton {
+            background-color: #5F7860;
+            /*#5F7860,#28FF06, #2C9334)*/
+            color: white;
+            font-size: 19px;
+            font-weight: 400;
+            letter-spacing: .1rem;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            margin: auto;
+        }
+
+        /* Addded by Asad Mujumder */
+        #addbutton:hover,#searchbutton:hover {
+            background-color: #28FF06;
+        }
+
+        /* Addded by Asad Mujumder */
+        .errorMsg {
+            color: red;
+            font-size: 15px;
+            display: none;
+        }
+
+        /* Addded by Asad Mujumder */
+        .errorMsg p {
+            margin-top: 0;
+        }
+
+        /* Addded by Asad Mujumder */
+        input[type=text] {
+            width: 100%;
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+            outline: none;
+            background-color: #f8f8f8;
+            font-size: 16px;
+            resize: none;
+        }
+
+        /* Addded by Asad Mujumder */
+        input[type=text]:focus {
+            border: 1px solid #555;
+        }
+
+
+        /*#legend {
+  padding: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  line-height: 18px;
+  height: 150px;
+  margin-bottom: 40px;
+  width: 100px;
+}*/
+
+        /*.legend-key {
+  display: inline-block;
+  border-radius: 20%;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+}*/
+        /* ********************************************************************** */
+        /* New Form Styles To Add START*/
+        /* Addded by Asad Mujumder */
+        label {
+            padding: 8px 6px 6px 0;
+            display: inline-block;
+        }
+
+        /* Addded by Asad Mujumder */
+        input[type=date] {
+            width: 100%;
+            padding: 6px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+            outline: none;
+            background-color: #f8f8f8;
+            font-size: 16px;
+            resize: none;
+        }
+
+        /* Addded by Asad Mujumder */
+        input[type=date]:focus {
+            border: 1px solid #555;
+        }
+
+        /* Addded by Asad Mujumder */
+        select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+            outline: none;
+            background-color: #f8f8f8;
+            font-size: 16px;
+            resize: none;
+        }
+
+        /* Addded by Asad Mujumder */
+        select:focus {
+            border: 1px solid #555;
+        }
+
+        /* Addded by Asad Mujumder */
+        .formElement {
+            margin-bottom: 10px;
+        }
+
+        /* New Form Styles To Add END*/
+        /* ********************************************************************** */
+
+/* Marker Style */
+.marker {
+    background-image: url('/img/mapbox-icon.png');
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    z-index: 3;
+    cursor: pointer;
+}
+
+/* Popup Style */
+.mapboxgl-popup {
+    max-width: 300px;
+    height: fit-content;
+    overflow-wrap: break-word;
+    padding-bottom: 50px;
+    z-index:4;
+}
+  
+.mapboxgl-popup-content {
+    text-align: center;
+    font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+    padding: 0;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.mapboxgl-popup-content-wrapper {
+    padding: 1%;
+}
+
+#removeSearch{
+    z-index: 6;
+    background-color: black;
+    color: white;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#removeSearch:hover{
+    background-color: #5F7860;
+}
